@@ -11,6 +11,7 @@ require 'open-uri'
 
 require File.join(File.dirname(__FILE__), 'either')
 
+#this is the same file because otherwise you have to reload camping to refresh the App class
 class App
     def self.getBaseUrl(appName)
         hash = self.load appName

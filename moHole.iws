@@ -80,7 +80,7 @@
       <file leaf-file-name="moHole.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/moHole.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="33" selection-start="1027" selection-end="1027" vertical-scroll-proportion="0.39716312">
+            <state line="13" column="92" selection-start="362" selection-end="362" vertical-scroll-proportion="0.035460994">
               <folding />
             </state>
           </provider>
@@ -470,7 +470,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/moHole.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="33" selection-start="1027" selection-end="1027" vertical-scroll-proportion="0.39716312">
+        <state line="13" column="92" selection-start="362" selection-end="362" vertical-scroll-proportion="0.035460994">
           <folding />
         </state>
       </provider>
