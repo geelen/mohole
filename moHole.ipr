@@ -248,6 +248,10 @@
   <component name="SvnBranchConfigurationManager">
     <option name="myVersion" value="123" />
   </component>
+  <component name="ToggleTest">
+    <toggle from="*" to="*UnitTest" />
+    <toggle from="*" to="*AtomicTest" />
+  </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="" />
   </component>

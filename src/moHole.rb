@@ -23,7 +23,7 @@ class App
         hash[:replace].call doc
         (doc/'//a[@href]').each { |link| link.attributes['href'] = self.hackLink(link.attributes['href'], appName, true) }
         (doc/'//img[@src]').each { |link| link.attributes['src'] = self.hackLink(link.attributes['src'], appName) }
-        doc.to_s.gsub(/<!--.*-->/, '')
+        doc.to_s.gsub(/<!--.*?-->/, '')
     end
 
     def self.hackLink(url, appName, proxy = false)
@@ -34,7 +34,6 @@ class App
         else
             self.getBaseUrl(appName).sub(/\/$/, '') + url
         end
-
     end
 
     def self.load(appName)

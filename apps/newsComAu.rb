@@ -7,8 +7,9 @@
 {
         :url => "http://www.news.com.au/",
         :replace => proc { |doc|
+            title = doc.at(:title).innerText
             (doc/:head).remove
-            (doc/:body).prepend('<head><meta name="viewport" content="width=320"> </head>')
+            (doc/:body).prepend("<head><meta name='viewport' content='width=320''><title>MoHole! - #{title}</head>")
             (doc/'div.skip').remove
             (doc/'div.ad').remove
             (doc/:iframe).remove
@@ -17,7 +18,5 @@
             (doc/'#nav').remove
             (doc/'#ninnbar').remove
             (doc/'#ticker').remove
-            #can't do this last one :(
-            #doc.each_child { |elem| elem.remove if elem.comment? }
         }
 }
