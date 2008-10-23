@@ -80,7 +80,7 @@
       <file leaf-file-name="moHole.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/moHole.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="36" selection-start="913" selection-end="913" vertical-scroll-proportion="0.47706422">
+            <state line="33" column="12" selection-start="1055" selection-end="1055" vertical-scroll-proportion="0.6055046">
               <folding />
             </state>
           </provider>
@@ -107,7 +107,7 @@
       <file leaf-file-name="newsComAu.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/newsComAu.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="0" selection-start="581" selection-end="581" vertical-scroll-proportion="0.34862384">
+            <state line="10" column="91" selection-start="342" selection-end="342" vertical-scroll-proportion="0.18348624">
               <folding />
             </state>
           </provider>
@@ -496,14 +496,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/moHole.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="36" selection-start="913" selection-end="913" vertical-scroll-proportion="0.47706422">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/either.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="141" selection-end="141" vertical-scroll-proportion="0.09174312">
+        <state line="33" column="12" selection-start="1055" selection-end="1055" vertical-scroll-proportion="0.6055046">
           <folding />
         </state>
       </provider>
@@ -515,9 +508,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/either.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="0" selection-start="141" selection-end="141" vertical-scroll-proportion="0.09174312">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/apps/newsComAu.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="581" selection-end="581" vertical-scroll-proportion="0.34862384">
+        <state line="10" column="91" selection-start="342" selection-end="342" vertical-scroll-proportion="0.18348624">
           <folding />
         </state>
       </provider>

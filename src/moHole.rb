@@ -21,10 +21,20 @@ class App
         hash = self.load appName
         doc = Hpricot(open(uri.gsub(/http:\/+/, "http://")))
         hash[:replace].call doc
-        (doc/'//a[@href]').each { |link| link.attributes['href'] = "/#{appName}/" + self.getBaseUrl(appName).sub(/\/$/,'') + link.attributes['href'] }
-        (doc/'//img[@src]').each { |link|
-            link.attributes['src'] = self.getBaseUrl(appName).sub(/\/$/,'') + link.attributes['src'] unless link.attributes['src'] =~ /^http:\/\// }
-        doc.to_s.gsub(/<!--.*-->/,'')
+        (doc/'//a[@href]').each { |link| link.attributes['href'] = self.hackLink(link.attributes['href'], appName, true) }
+        (doc/'//img[@src]').each { |link| link.attributes['src'] = self.hackLink(link.attributes['src'], appName) }
+        doc.to_s.gsub(/<!--.*-->/, '')
+    end
+
+    def self.hackLink(url, appName, proxy = false)
+        if proxy
+            "/#{appName}/" + self.getBaseUrl(appName).sub(/\/$/, '') + url.sub(/^http:\/\/[^\/]+/, '')
+        elsif url =~ /^http:\/\//
+            url
+        else
+            self.getBaseUrl(appName).sub(/\/$/, '') + url
+        end
+
     end
 
     def self.load(appName)

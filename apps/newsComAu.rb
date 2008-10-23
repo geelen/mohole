@@ -8,12 +8,15 @@
         :url => "http://www.news.com.au/",
         :replace => proc { |doc|
             (doc/:head).remove
+            (doc/:body).prepend('<head><meta name="viewport" content="width=320"> </head>')
             (doc/'div.skip').remove
             (doc/'div.ad').remove
             (doc/:iframe).remove
             (doc/'#network-bar').remove
             (doc/'#time-date').remove
             (doc/'#nav').remove
+            (doc/'#ninnbar').remove
+            (doc/'#ticker').remove
             #can't do this last one :(
             #doc.each_child { |elem| elem.remove if elem.comment? }
         }
