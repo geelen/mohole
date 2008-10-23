@@ -22,7 +22,9 @@ class App
         doc = Hpricot(open(uri.gsub(/http:\/+/, "http://")))
         hash[:replace].call doc
         (doc/'//a[@href]').each { |link| link.attributes['href'] = "/#{appName}/" + self.getBaseUrl(appName).sub(/\/$/,'') + link.attributes['href'] }
-        doc.to_s
+        (doc/'//img[@src]').each { |link|
+            link.attributes['src'] = self.getBaseUrl(appName).sub(/\/$/,'') + link.attributes['src'] unless link.attributes['src'] =~ /^http:\/\// }
+        doc.to_s.gsub(/<!--.*-->/,'')
     end
 
     def self.load(appName)
