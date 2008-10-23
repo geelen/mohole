@@ -9,57 +9,28 @@ require 'camping'
 require 'hpricot'
 require 'open-uri'
 
-#require File.join(File.dirname(__FILE__), 'app')
-
-Camping.goes :Mohole
-
-class Left
-    def initialize val
-        @val = val
-    end
-
-    def isLeft
-        return true
-    end
-
-    def toLeft
-        return @val
-    end
-
-    def isRight
-        return false
-    end
-
-    def toRight
-        raise "Right on left!"
-    end
-end
-
-class Right
-    def initialize val
-        @val = val
-    end
-
-    def isLeft
-        return false
-    end
-
-    def toLeft
-        raise "Left on right!"
-    end
-
-    def isRight
-        return true
-    end
-
-    def toRight
-        return @val
-    end
-end
+require File.join(File.dirname(__FILE__), 'either')
 
 class App
-    def self.load(sourceFile)
-        hash = check(eval(IO.readlines(sourceFile).join("\n")))
+    def self.getBaseUrl(appName)
+        hash = self.load appName
+        hash[:url]
+    end
+
+    def self.execute(appName, uri)
+        hash = self.load appName
+        doc = Hpricot(open(uri.gsub(/http:\/+/, "http://")))
+        hash[:replace].call doc
+        (doc/'//a[@href]').each { |link| link.attributes['href'] = "/#{appName}/" + self.getBaseUrl(appName).sub(/\/$/,'') + link.attributes['href'] }
+        doc.to_s
+    end
+
+    def self.load(appName)
+        filename = File.join("apps", appName + ".rb")
+        if !File.exists?(filename)
+            raise "No app with name #{appName}"
+        end
+        hash = check(eval(IO.readlines(filename).join("\n")))
         raise hash.toRight + " - FAIL. Need a hash as the only element. Must have be {:url => String, :replace => Proc}" if hash.isRight
         hash.toLeft
     end
@@ -75,19 +46,9 @@ class App
             Left.new(hash)
         end
     end
-
-    def self.execute(appName)
-        filename = File.join("apps", appName + ".rb")
-        if File.exists?(filename)
-            hash = self.load filename
-            doc = Hpricot(open(hash[:url]))
-            hash[:replace].call doc
-            doc.to_s
-        else
-            return "No app with name #{appName}"
-        end
-    end
 end
+
+Camping.goes :Mohole
 
 module Mohole::Controllers
 
@@ -106,10 +67,15 @@ module Mohole::Controllers
     #
     class Page < R '/(\w+)'
         def get(page_name)
-            App.execute page_name
+            redirect "/#{page_name}/#{App.getBaseUrl page_name}"
         end
     end
 
+    class PageTwo < R '/(\w+)/(.*)'
+        def get(page_name, two)
+            App.execute page_name, two
+        end
+    end
 end
 
 module Mohole::Views
