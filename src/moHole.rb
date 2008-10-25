@@ -9,92 +9,36 @@ require 'camping'
 require 'hpricot'
 require 'open-uri'
 
-require File.join(File.dirname(__FILE__), 'either')
-
-#this is the same file because otherwise you have to reload camping to refresh the App class
-class App
-    def self.getBaseUrl(appName)
-        hash = self.load appName
-        hash[:url]
-    end
-
-    def self.execute(appName, uri)
-        hash = self.load appName
-        doc = Hpricot(open(uri.gsub(/http:\/+/, "http://")))
-        hash[:replace].call doc
-        (doc/'//a[@href]').each { |link| link.attributes['href'] = self.hackLink(link.attributes['href'], appName, true) }
-        (doc/'//img[@src]').each { |link| link.attributes['src'] = self.hackLink(link.attributes['src'], appName) }
-        doc.to_s.gsub(/<!--.*?-->/, '')
-    end
-
-    def self.hackLink(url, appName, proxy = false)
-        if proxy
-            "/#{appName}/" + self.getBaseUrl(appName).sub(/\/$/, '') + url.sub(/^http:\/\/[^\/]+/, '')
-        elsif url =~ /^http:\/\//
-            url
-        else
-            self.getBaseUrl(appName).sub(/\/$/, '') + url
-        end
-    end
-
-    def self.load(appName)
-        filename = File.join("apps", appName + ".rb")
-        if !File.exists?(filename)
-            raise "No app with name #{appName}"
-        end
-        hash = check(eval(IO.readlines(filename).join("\n")))
-        raise hash.toRight + " - FAIL. Need a hash as the only element. Must have be {:url => String, :replace => Proc}" if hash.isRight
-        hash.toLeft
-    end
-
-    def self.check(hash)
-        if !hash.is_a? Hash
-            Right.new("hash is not a hash!")
-        elsif !hash[:url].is_a? String
-            Right.new("hash[:url] is not a String!")
-        elsif !hash[:replace].is_a? Proc
-            Right.new("hash[:replace] is not a Proc!")
-        else
-            Left.new(hash)
-        end
-    end
-end
+$LOAD_PATH << File.dirname(__FILE__)
+require 'either'
+require 'app_base'
 
 Camping.goes :Mohole
+AppRegistry.load_directory 'apps'
 
 module Mohole::Controllers
+  class Index < R '/'
+      def get
+          render :index
+      end
+  end
 
-    # The root slash shows the `index' view.
-    class Index < R '/'
-        def get
-            render :index
-        end
-    end
+  class Page < R '/([\w|\.]+)'
+      def get(page_name)
+        app = AppRegistry.all[page_name]
+        redirect "/#{page_name}/#{app.base}"
+      end
+  end
 
-    # Any other page name gets sent to the view
-    # of the same name.
-    #
-    #   /index -> Views#index
-    #   /sample -> Views#sample
-    #
-    class Page < R '/(\w+)'
-        def get(page_name)
-            redirect "/#{page_name}/#{App.getBaseUrl page_name}"
-        end
-    end
-
-    class PageTwo < R '/(\w+)/(.*)'
-        def get(page_name, two)
-            App.execute page_name, two
-        end
-    end
+  class PageTwo < R '/([\w|\.]+)/(.*)'
+      def get(page_name, two)
+          doc = Hpricot(open(uri.gsub(/http:\/+/, "http://")))
+          AppRegistry.all[appName].rewrite doc
+      end
+  end
 end
 
 module Mohole::Views
-
-    # If you have a `layout' method like this, it
-    # will wrap the HTML in the other methods.  The
-    # `self << yield' is where the HTML is inserted.
     def layout
         html do
             title { 'Get in my moHole!' }
@@ -102,15 +46,12 @@ module Mohole::Views
         end
     end
 
-    # The `index' view.  Inside your views, you express
-    # the HTML in Ruby.  See http://code.whytheluckystiff.net/markaby/.
     def index
-        p 'Here at the apps!:'
+        p 'Here are the apps!:'
         ul do
-            Dir.glob(File.join('apps', '*')) { |file|
-                appName = File.basename(file, '.rb')
-                li { a file, :href => appName }
-            }
+          AppRegistry.all.each_value do |app|
+            li { a app.name, :href => app.name }
+          end
         end
     end
 end
