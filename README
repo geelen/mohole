@@ -3,3 +3,8 @@
 # GEMS NEEDED
 sudo gem install camping hpricot
 
+# TO RUN
+camping src/moHole.rb
+
+# TO TEST
+write tests!
