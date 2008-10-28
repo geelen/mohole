@@ -77,10 +77,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="moHole.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="moHole.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/moHole.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="46" selection-start="786" selection-end="786" vertical-scroll-proportion="0.4574468">
+            <state line="27" column="40" selection-start="540" selection-end="540" vertical-scroll-proportion="0.31678486">
               <folding />
             </state>
           </provider>
@@ -89,7 +89,7 @@
       <file leaf-file-name="either.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/either.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="0" selection-start="141" selection-end="141" vertical-scroll-proportion="0.043735225">
+            <state line="2" column="18" selection-start="59" selection-end="59" vertical-scroll-proportion="-0.016548464">
               <folding />
             </state>
           </provider>
@@ -98,16 +98,16 @@
       <file leaf-file-name="googleNoImg.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/apps/googleNoImg.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="0" selection-start="107" selection-end="107" vertical-scroll-proportion="0.120567374">
+            <state line="4" column="5" selection-start="102" selection-end="102" vertical-scroll-proportion="0.08037825">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="newsComAu.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="newsComAu.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/newsComAu.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="0" selection-start="475" selection-end="475" vertical-scroll-proportion="0.321513">
+            <state line="29" column="65" selection-start="936" selection-end="936" vertical-scroll-proportion="0.58274233">
               <folding />
             </state>
           </provider>
@@ -116,7 +116,7 @@
       <file leaf-file-name="app_base.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app_base.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="6" selection-start="264" selection-end="264" vertical-scroll-proportion="0.33333334">
+            <state line="43" column="14" selection-start="815" selection-end="815" vertical-scroll-proportion="0.5744681">
               <folding />
             </state>
           </provider>
@@ -508,35 +508,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/either.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="141" selection-end="141" vertical-scroll-proportion="0.043735225">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/googleNoImg.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="0" selection-start="107" selection-end="107" vertical-scroll-proportion="0.120567374">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apps/newsComAu.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="0" selection-start="475" selection-end="475" vertical-scroll-proportion="0.321513">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app_base.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="6" selection-start="264" selection-end="264" vertical-scroll-proportion="0.33333334">
+        <state line="2" column="18" selection-start="59" selection-end="59" vertical-scroll-proportion="-0.016548464">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/moHole.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="46" selection-start="786" selection-end="786" vertical-scroll-proportion="0.4574468">
+        <state line="27" column="40" selection-start="540" selection-end="540" vertical-scroll-proportion="0.31678486">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app_base.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="14" selection-start="815" selection-end="815" vertical-scroll-proportion="0.5744681">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/googleNoImg.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="5" selection-start="102" selection-end="102" vertical-scroll-proportion="0.08037825">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apps/newsComAu.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="65" selection-start="936" selection-end="936" vertical-scroll-proportion="0.58274233">
           <folding />
         </state>
       </provider>
