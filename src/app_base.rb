@@ -78,12 +78,20 @@ class AppBase
       (doc/:body).prepend("<head><title>MoHole! - #{title}</title></head>")
     end
 
-    (doc/'//a[@href]').each { |link|
-      link.raw_attributes['href'] = hack_link(link.attributes['href'], true)
+    (doc/'//a[@href]').each { |a_tag|
+      a_tag.raw_attributes['href'] = hack_link(a_tag.attributes['href'], true)
     }
 
-    (doc/'//img[@src]').each { |link|
-      link.raw_attributes['src'] = hack_link(link.attributes['src'])
+    (doc/'//link[@href]').each { |link_tag|
+      link_tag.raw_attributes['href'] = hack_link(link_tag.attributes['href'])
+    }
+
+    (doc/'//img[@src]').each { |img_tag|
+      img_tag.raw_attributes['src'] = hack_link(img_tag.attributes['src'])
+    }
+
+    (doc/'//iframe[@src]').each { |iframe_tag|
+      iframe_tag.raw_attributes['src'] = hack_link(iframe_tag.attributes['src'])
     }
     doc.to_s.gsub(/<!--.*?-->/, '')
   end
@@ -97,9 +105,9 @@ class AppBase
             elsif url =~ /^http[s:]\/\//
               url
             else
-              @base.sub(/\/$/, '') + url
+              @base + url
             end
-#      puts "Hacking: #{url.inspect} with proxy: #{proxy} gives: #{result}"
+      puts "Hacking: #{url.inspect} with proxy: #{proxy} gives: #{result}"
     result
   end
 end
