@@ -28,5 +28,11 @@ define 'news.com.au' do
     (doc/'#gallery-splash-page').remove
     (doc/'#image-lead'/:img).set({:width => '260', :height => '254'})
     (doc/'.thumbnail').set({:style => "float: right;"})
+#    (doc/:img).each { |img_tag|
+#      if (img_tag.attributes['width'].to_i > 320)
+#        img_tag.raw_attributes.delete('height')
+#        img_tag.raw_attributes['width'] = '320'
+#      end
+#    }
   end
 end

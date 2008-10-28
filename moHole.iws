@@ -420,7 +420,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1680" height="1000" extended-state="0" />
+    <frame x="0" y="25" width="1680" height="1000" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
@@ -536,16 +536,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/apps/abc-news.rb">
+    <entry file="file://$PROJECT_DIR$/src/app_base.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="18" selection-start="76" selection-end="76" vertical-scroll-proportion="0.040189125">
+        <state line="74" column="36" selection-start="1428" selection-end="1428" vertical-scroll-proportion="0.63829786">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app_base.rb">
+    <entry file="file://$PROJECT_DIR$/apps/abc-news.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="36" selection-start="1428" selection-end="1428" vertical-scroll-proportion="0.63829786">
+        <state line="2" column="18" selection-start="76" selection-end="76" vertical-scroll-proportion="0.040189125">
           <folding />
         </state>
       </provider>
