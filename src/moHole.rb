@@ -31,7 +31,7 @@ module Mohole::Controllers
   end
 
   class PageTwo < R '/([\w|\.]+)/(.*)'
-      def get(page_name, two)
+      def get(appName, uri)
           doc = Hpricot(open(uri.gsub(/http:\/+/, "http://")))
           AppRegistry.all[appName].rewrite doc
       end
