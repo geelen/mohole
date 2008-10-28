@@ -66,7 +66,17 @@ class AppBase
   end
 
   def rewrite doc
+    title = doc.at(:title).inner_text
+
     @rewrite.call doc
+
+    if (title_tag = doc.at(:title))
+      title_tag.inner_html = "MoHole! - #{title}"
+    elsif (head_tag = doc.at(:head))
+      head_tag.inner_html += "<title>MoHole! - #{title}</title>"
+    elsif (body_tag = doc.at(:body))
+      (doc/:body).prepend("<head><title>MoHole! - #{title}</title></head>")
+    end
 
     (doc/'//a[@href]').each { |link|
       link.raw_attributes['href'] = hack_link(link.attributes['href'], true)

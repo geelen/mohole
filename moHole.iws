@@ -80,7 +80,7 @@
       <file leaf-file-name="moHole.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/moHole.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="40" selection-start="540" selection-end="540" vertical-scroll-proportion="0.31678486">
+            <state line="28" column="44" selection-start="585" selection-end="585" vertical-scroll-proportion="0.33687943">
               <folding />
             </state>
           </provider>
@@ -107,7 +107,16 @@
       <file leaf-file-name="newsComAu.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/apps/newsComAu.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="65" selection-start="936" selection-end="936" vertical-scroll-proportion="0.58274233">
+            <state line="29" column="55" selection-start="958" selection-end="958" vertical-scroll-proportion="0.58274233">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="abc-news.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/apps/abc-news.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="18" selection-start="76" selection-end="76" vertical-scroll-proportion="0.040189125">
               <folding />
             </state>
           </provider>
@@ -116,7 +125,7 @@
       <file leaf-file-name="app_base.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app_base.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="14" selection-start="815" selection-end="815" vertical-scroll-proportion="0.5744681">
+            <state line="74" column="36" selection-start="1428" selection-end="1428" vertical-scroll-proportion="0.63829786">
               <folding />
             </state>
           </provider>
@@ -515,14 +524,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/moHole.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="40" selection-start="540" selection-end="540" vertical-scroll-proportion="0.31678486">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app_base.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="43" column="14" selection-start="815" selection-end="815" vertical-scroll-proportion="0.5744681">
+        <state line="28" column="44" selection-start="585" selection-end="585" vertical-scroll-proportion="0.33687943">
           <folding />
         </state>
       </provider>
@@ -534,9 +536,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/apps/abc-news.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="18" selection-start="76" selection-end="76" vertical-scroll-proportion="0.040189125">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app_base.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="74" column="36" selection-start="1428" selection-end="1428" vertical-scroll-proportion="0.63829786">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/apps/newsComAu.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="65" selection-start="936" selection-end="936" vertical-scroll-proportion="0.58274233">
+        <state line="29" column="55" selection-start="958" selection-end="958" vertical-scroll-proportion="0.58274233">
           <folding />
         </state>
       </provider>
