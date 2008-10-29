@@ -76,8 +76,8 @@ class AppBase
       title_tag.inner_html = "MoHole! - #{title}"
     elsif (head_tag = doc.at(:head))
       head_tag.inner_html += "<title>MoHole! - #{title}</title>"
-    elsif (body_tag = doc.at(:body))
-      (doc/:body).prepend("<head><title>MoHole! - #{title}</title></head>")
+    elsif (body_tags = (doc/:body))
+      body_tags.prepend("<head><title>MoHole! - #{title}</title></head>")
     end
 
     (doc/'//a[@href]').each { |a_tag|
