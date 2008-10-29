@@ -63,6 +63,8 @@ class AppBase
     @name = name
     @base = base
     @rewrite = rewrite
+    @base_uri = URI.parse(base)
+    raise "Need a full http://address/, got #{base.inspect}" if !@base_uri.scheme
   end
 
   def rewrite doc
@@ -99,15 +101,24 @@ class AppBase
   private
 
   def hack_link(url, proxy = false)
+    uri = URI.parse(url)
     result =
             if proxy
-              "/#{@name}/" + @base.sub(/\/$/, '') + url.sub(/^http:\/\/[^\/]+/, '')
-            elsif url =~ /^http[s:]\/\//
-              url
+              "/#{@name}/#{@base_uri.scheme}://" +
+                      if uri.relative?
+                        @base_uri.host
+                      else
+                        puts "Warning! Proxying non-base url #{uri}" if uri.host != @base_uri.host
+                        uri.host
+                      end + "#{uri.path}"
             else
-              @base + url
+              if uri.relative?
+                "#{@base_uri.scheme}://#{@base_uri.host}"
+              else
+                ""
+              end + "#{uri.to_s}"
             end
-      puts "Hacking: #{url.inspect} with proxy: #{proxy} gives: #{result}"
+#      puts "Hacking: #{url.inspect} with proxy: #{proxy} gives: #{result}"
     result
   end
 end
