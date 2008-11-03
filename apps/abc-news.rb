@@ -25,5 +25,6 @@ define 'abc_news' do
     (doc/'.tags').remove
     (doc/'#header').remove
     (doc/'#navBlock').remove
+    (doc/'#stateTabs').remove
   end
 end

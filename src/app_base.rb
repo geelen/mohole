@@ -84,11 +84,19 @@ class AppBase
       a_tag.raw_attributes['href'] = hack_link(a_tag.attributes['href'], true)
     }
 
+    (doc/'//form[@action]').each { |a_tag|
+      a_tag.raw_attributes['action'] = hack_link(a_tag.attributes['action'], true)
+    }
+
     (doc/'//link[@href]').each { |link_tag|
       link_tag.raw_attributes['href'] = hack_link(link_tag.attributes['href'])
     }
 
     (doc/'//img[@src]').each { |img_tag|
+      img_tag.raw_attributes['src'] = hack_link(img_tag.attributes['src'])
+    }
+
+    (doc/'//script[@src]').each { |img_tag|
       img_tag.raw_attributes['src'] = hack_link(img_tag.attributes['src'])
     }
 
@@ -101,10 +109,13 @@ class AppBase
   private
 
   def hack_link(url, proxy = false)
-    if url =~ /^javascript/
+    case url
+    when /^javascript/:
+      url
+    when /\.jpg/:
       url
     else
-      uri = URI.parse(url.strip)
+      uri = URI.parse(url.strip.gsub(/ /, '%20'))
       result =
               if proxy
                 "/#{@name}/#{@base_uri.scheme}://" +
@@ -116,12 +127,17 @@ class AppBase
                         end + "#{uri.path}"
               else
                 if uri.relative?
-                  "#{@base_uri.scheme}://#{@base_uri.host}"
+                  "#{@base_uri.scheme}://#{@base_uri.host}" +
+                          if uri =~ /^\// then
+                            ""
+                          else
+                            "/"
+                          end
                 else
                   ""
                 end + "#{uri.to_s}"
               end
-#      puts "Hacking: #{url.inspect} with proxy: #{proxy} gives: #{result}"
+      puts "Hacking: #{url.inspect} with proxy: #{proxy} gives: #{result}"
       result
     end
   end

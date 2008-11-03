@@ -26,6 +26,7 @@ define 'news.com.au' do
     (doc/'#skip-advert').remove
     (doc/'#NewsVisualiser').remove
     (doc/'#gallery-splash-page').remove
+    (doc/'#news-weather').remove
     (doc/'#image-lead'/:img).set({:width => '260', :height => '254'})
     (doc/'.thumbnail').set({:style => "float: right;"})
 #    (doc/:img).each { |img_tag|
