@@ -101,25 +101,29 @@ class AppBase
   private
 
   def hack_link(url, proxy = false)
-    uri = URI.parse(url)
-    result =
-            if proxy
-              "/#{@name}/#{@base_uri.scheme}://" +
-                      if uri.relative?
-                        @base_uri.host
-                      else
-                        puts "Warning! Proxying non-base url #{uri}" if uri.host != @base_uri.host
-                        uri.host
-                      end + "#{uri.path}"
-            else
-              if uri.relative?
-                "#{@base_uri.scheme}://#{@base_uri.host}"
+    if url =~ /^javascript/
+      url
+    else
+      uri = URI.parse(url.strip)
+      result =
+              if proxy
+                "/#{@name}/#{@base_uri.scheme}://" +
+                        if uri.relative?
+                          @base_uri.host
+                        else
+                          puts "Warning! Proxying non-base url #{uri}" if uri.host != @base_uri.host
+                          uri.host
+                        end + "#{uri.path}"
               else
-                ""
-              end + "#{uri.to_s}"
-            end
+                if uri.relative?
+                  "#{@base_uri.scheme}://#{@base_uri.host}"
+                else
+                  ""
+                end + "#{uri.to_s}"
+              end
 #      puts "Hacking: #{url.inspect} with proxy: #{proxy} gives: #{result}"
-    result
+      result
+    end
   end
 end
 
