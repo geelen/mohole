@@ -79,30 +79,22 @@ class AppBase
     elsif (body_tags = (doc/:body))
       body_tags.prepend("<head><title>MoHole! - #{title}</title></head>")
     end
-
-    (doc/'//a[@href]').each { |a_tag|
-      a_tag.raw_attributes['href'] = hack_link(a_tag.attributes['href'], true)
+    
+    link_hacks = [
+      {:proxy => true, :tags => {:href => [:a], :action => [:form]}},
+      {:proxy => false, :tags => {:href => [:link], :src => [:img, :script, :iframe]}}
+    ]
+    
+    link_hacks.each { |hack|
+      hack[:tags].each { |attr,tags|
+        tags.each { |tag|
+          (doc/"//#{tag}[@#{attr}]").each { |a_tag|
+            a_tag.raw_attributes[attr.to_s] = hack_link(a_tag.attributes[attr.to_s], hack[:proxy])
+          }
+        }
+      }
     }
-
-    (doc/'//form[@action]').each { |a_tag|
-      a_tag.raw_attributes['action'] = hack_link(a_tag.attributes['action'], true)
-    }
-
-    (doc/'//link[@href]').each { |link_tag|
-      link_tag.raw_attributes['href'] = hack_link(link_tag.attributes['href'])
-    }
-
-    (doc/'//img[@src]').each { |img_tag|
-      img_tag.raw_attributes['src'] = hack_link(img_tag.attributes['src'])
-    }
-
-    (doc/'//script[@src]').each { |img_tag|
-      img_tag.raw_attributes['src'] = hack_link(img_tag.attributes['src'])
-    }
-
-    (doc/'//iframe[@src]').each { |iframe_tag|
-      iframe_tag.raw_attributes['src'] = hack_link(iframe_tag.attributes['src'])
-    }
+    
     doc.to_s.gsub(/<!--.*?-->/, '')
   end
 
@@ -110,10 +102,10 @@ class AppBase
 
   def hack_link(url, proxy = false)
     case url
-    when /^javascript/:
+    when /^javascript/, /^mailto/:
       url
-    when /\.jpg/:
-      url
+    # when /\.jpg/, /\.png/:
+      # url
     else
       uri = URI.parse(url.strip.gsub(/ /, '%20'))
       result =
@@ -127,12 +119,7 @@ class AppBase
                         end + "#{uri.path}"
               else
                 if uri.relative?
-                  "#{@base_uri.scheme}://#{@base_uri.host}" +
-                          if uri =~ /^\// then
-                            ""
-                          else
-                            "/"
-                          end
+                  "#{@base_uri.scheme}://#{@base_uri.host}"
                 else
                   ""
                 end + "#{uri.to_s}"
