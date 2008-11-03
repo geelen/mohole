@@ -6,7 +6,7 @@ define 'news.com.au' do
 <head>
   <meta name='viewport' content='width=320'>
   <style type="text/css">
-    body { font:normal 100% Arial, Helvetica, sans-serif; margin:0; padding:0; }
+    body { font:normal 100% Arial, Helvetica, sans-serif; margin:0; padding:5px; }
   </style>
 </head>})
     (doc/'div.skip').remove
@@ -27,8 +27,12 @@ define 'news.com.au' do
     (doc/'#NewsVisualiser').remove
     (doc/'#gallery-splash-page').remove
     (doc/'#news-weather').remove
+    (doc/'.sponsored-feature').remove
+    (doc/'#around-australia-all').remove
+    (doc/'#module-overview-horoscopes').remove
+    (doc/'.ad300x250').remove
     (doc/'#image-lead'/:img).set({:width => '260', :height => '254'})
-    (doc/'.thumbnail').set({:style => "float: right;"})
+    [(doc/'.thumbnail'), (doc/'.story-block'/:img)].each { |e| e.set({:style => "float: right;"}) }
 #    (doc/:img).each { |img_tag|
 #      if (img_tag.attributes['width'].to_i > 320)
 #        img_tag.raw_attributes.delete('height')

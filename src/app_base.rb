@@ -124,7 +124,7 @@ class AppBase
                   ""
                 end + "#{uri.to_s}"
               end
-      puts "Hacking: #{url.inspect} with proxy: #{proxy} gives: #{result}"
+      # puts "Hacking: #{url.inspect} with proxy: #{proxy} gives: #{result}"
       result
     end
   end
