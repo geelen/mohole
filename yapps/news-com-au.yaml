@@ -47,6 +47,12 @@ rewrites:
       style: "float: right;"
   - action: inject
     within:
+      - class: story-block
+      - tag: img
+    set:
+      style: "float: right;"
+  - action: inject
+    within:
       - class: thumbnail
       - tag: img
     set:
