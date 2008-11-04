@@ -1,0 +1,29 @@
+---
+name: bom-radar
+base: http://www.bom.gov.au/weather/radar/
+rewrites:
+  - remove:
+      - head
+      - search: table
+        at_indices: [0, -1]
+      - search: div
+        at_indices: [0]
+      - map
+      - search: img
+        at_indices: [0]
+      - script
+      - search: table
+        at_indices: [1]
+      - search: div
+        at_indices: [1]
+      - search: tr
+        at_indices: [0, 1, 2, 3, 4]
+  - prepend:
+    - at: body
+      insert: >
+        <head>
+          <meta name='viewport' content='width=320'>
+          <style type="text/css">
+            h1 { font-size: 16px; }
+          </style>
+        </head>

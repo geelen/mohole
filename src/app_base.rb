@@ -57,13 +57,12 @@ class AppBase
   def self.fromYamlFilename file
     y = YAML.load(IO.read(file))
     AppBase.new(y['name'], y['base'], proc { |doc|
-      y['rewrites'].each { |rule|
-        (rule['remove'] or []).each { |t| (doc/t).remove }
+      (y['rewrites'] or []).each { |rule|
+        (rule['remove'] or []).each { |t| self.search(doc, t) { |elems| elems.remove } }
         (rule['prepend'] or []).each { |prep| (doc/prep['at']).prepend(prep['insert'].to_s) }
         (rule['inject'] or []).each { |prep|
           injections = Hash[*prep.map { |k, v| [k.to_s, v.to_s] }.delete_if { |k, _| k == 'at' }.compact.flatten]
-          [*prep['at']].each { |at|
-            elems = at.split('/').inject(doc) { |d, s| d/s.to_s }
+          self.search(doc, prep['at']) { |elems|
             elems.set(injections)
           }
         }
@@ -136,9 +135,25 @@ class AppBase
                   ""
                 end + "#{uri.to_s}"
               end
-      # puts "Hacking: #{url.inspect} with proxy: #{proxy} gives: #{result}"
+#      puts "Hacking: #{url.inspect} with proxy: #{proxy} gives: #{result}"
       result
     end
+  end
+
+  def self.search(doc, objs)
+    if objs.is_a? Array then
+      objs
+    else
+      [objs]
+    end.each { |obj|
+      if obj.is_a? Hash
+        str = obj['search']
+        indices = obj['at_indices']
+        str.split('/').inject(doc) { |d, s| d/s.to_s }.values_at(*indices).compact.each { |elem| yield elem.search("*") }
+      else
+        yield obj.split('/').inject(doc) { |d, s| d/s.to_s }
+      end
+    }
   end
 end
 

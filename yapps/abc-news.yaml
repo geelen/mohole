@@ -16,6 +16,10 @@ rewrites:
       - '#stateTabs'
       - .tags
       - .media
+      - '#p-vid'
+      - '#p-aud'
+      - '#stateContent/ul'
+      - '#p-fa/.h1_tools'
   - prepend:
     - at: body
       insert: >
@@ -27,5 +31,6 @@ rewrites:
             h2 { font-size: 16px; }
             .tags { font-size: 70%; }
             .published { font-size: 70%; }
+            li { }
           </style>
         </head>
