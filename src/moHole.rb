@@ -13,8 +13,10 @@ $LOAD_PATH << File.dirname(__FILE__)
 require 'either'
 require 'app_base'
 
+APPS_PATH = 'yapps'
+
 Camping.goes :Mohole
-AppRegistry.all_in('apps')
+AppRegistry.all_in(APPS_PATH)
 
 module Mohole::Controllers
   class Index < R '/'
@@ -23,14 +25,14 @@ module Mohole::Controllers
     end
   end
 
-  class Page < R '/([\w|\.]+)'
+  class Page < R '/([\w|\.-]+)'
     def get(page_name)
       app = AppRegistry.get(page_name)
       redirect "/#{page_name}/#{app.base}"
     end
   end
 
-  class PageTwo < R '/([\w|\.]+)/(.*)'
+  class PageTwo < R '/([\w|\.-]+)/(.*)'
     def get(appName, uri)
       doc = Hpricot(open(uri.gsub(/http:\/+/, "http://")))
       AppRegistry.get(appName).rewrite doc
@@ -53,7 +55,7 @@ module Mohole::Views
   def index
     p 'Here are the apps!:'
     ul do
-      AppRegistry.all_in('apps').each_value do |app|
+      AppRegistry.all_in(APPS_PATH).each_value do |app|
         li { a app.name, :href => app.name }
       end
     end

@@ -1,0 +1,10 @@
+---
+name: google-no-images
+base: http://www.google.com/
+rewrites:
+  - remove:
+    - img
+  - prepend:
+    - at: form
+    - insert: >
+        <p>no imgs!</p>

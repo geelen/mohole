@@ -2,29 +2,32 @@
 name: news-com-au
 base: http://www.news.com.au/
 rewrites:
-  - remove: >
-      head
-      iframe
-      div.skip
-      div.ad
-      #network-bar
-      #time-date
-      #nav
-      #ninnbar
-      #ticker
-      #vxFlashPlayer
-      #title-bar
-      #ad
-      #skip-advert
-      #NewsVisualiser
-      #gallery-splash-page
-      #news-weather
-      #around-australia-all
-      #module-overview-horoscopes
-      .toolbar
-      .module-header
-      .sponsored-feature
-      .ad300x250
+  - remove:
+    - head
+    - iframe
+    - div.skip
+    - div.ad
+    - '#network-bar'
+    - '#time-date'
+    - '#nav'
+    - '#ninnbar'
+    - '#ticker'
+    - '#vxFlashPlayer'
+    - '#title-bar'
+    - '#ad'
+    - '#skip-advert'
+    - '#NewsVisualiser'
+    - '#gallery-splash-page'
+    - '#news-weather'
+    - '#around-australia-all'
+    - '#module-overview-horoscopes'
+    - .toolbar
+    - .module-header
+    - .sponsored-feature
+    - .ad300x250
+    - '#article-info'
+    - div.img-pagination
+    - '#print-logo'
   - prepend:
       - at: body
         insert: >
@@ -32,15 +35,15 @@ rewrites:
             <meta name='viewport' content='width=320'>
             <style type="text/css">
               body { font:normal 100% Arial, Helvetica, sans-serif; margin:0; padding:5px; }
+              img { border: 0px; }
+              #article-header { font-size: 70%; }
             </style>
           </head>
   - inject:
-      - at: '#content-wrapper'
-        style: ''
       - at:
           - .thumbnail
           - .story-block/img
         style: "float: right;"
-      - at: .thumbnail/img
+      - at: '#image-lead/a/img'
         width: 260
         height: 254

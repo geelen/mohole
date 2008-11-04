@@ -18,19 +18,13 @@ class AppBuilder
 end
 
 class AppRegistry
-  def self.define name, &blk
-    builder = AppBuilder.new name
-    builder.instance_eval &blk
-    register builder.get
-    name
-  end
+  @registered_apps = {}
 
-  def self.register app
-    (@registered_apps ||= {})[app.name] = app
+  def self.register yaml
   end
 
   def self.all_in dir
-    Dir[File.join(dir, '**', '*.rb')].each do |file|
+    Dir[File.join(dir, '**', '*.yaml')].each do |file|
       name, f = @files.to_a.detect { |name, f| f == file }
       if name.nil? || File.new(file).mtime != @mtimes[name]
         self.reload(file)
@@ -50,14 +44,32 @@ class AppRegistry
 
   def self.reload(file)
     puts "Loading: #{file}"
-    name = AppRegistry.instance_eval(IO.read(file))
-    (@files ||= {})[name] = file
-    (@mtimes||= {})[name] = File.new(file).mtime
+    app = AppBase.fromYamlFilename(file)
+    @registered_apps[app.name] = app
+    (@files ||= {})[app.name] = file
+    (@mtimes||= {})[app.name] = File.new(file).mtime
   end
 end
 
 class AppBase
   attr_reader :base, :name
+
+  def self.fromYamlFilename file
+    y = YAML.load(IO.read(file))
+    AppBase.new(y['name'], y['base'], proc { |doc|
+      y['rewrites'].each { |rule|
+        (rule['remove'] or []).each { |t| (doc/t).remove }
+        (rule['prepend'] or []).each { |prep| (doc/prep['at']).prepend(prep['insert'].to_s) }
+        (rule['inject'] or []).each { |prep|
+          injections = Hash[*prep.map { |k, v| [k.to_s, v.to_s] }.delete_if { |k, _| k == 'at' }.compact.flatten]
+          [*prep['at']].each { |at|
+            elems = at.split('/').inject(doc) { |d, s| d/s.to_s }
+            elems.set(injections)
+          }
+        }
+      }
+    })
+  end
 
   def initialize name, base, rewrite
     @name = name
@@ -79,14 +91,14 @@ class AppBase
     elsif (body_tags = (doc/:body))
       body_tags.prepend("<head><title>MoHole! - #{title}</title></head>")
     end
-    
+
     link_hacks = [
-      {:proxy => true, :tags => {:href => [:a], :action => [:form]}},
-      {:proxy => false, :tags => {:href => [:link], :src => [:img, :script, :iframe]}}
+            {:proxy => true, :tags => {:href => [:a], :action => [:form]}},
+                    {:proxy => false, :tags => {:href => [:link], :src => [:img, :script, :iframe]}}
     ]
-    
+
     link_hacks.each { |hack|
-      hack[:tags].each { |attr,tags|
+      hack[:tags].each { |attr, tags|
         tags.each { |tag|
           (doc/"//#{tag}[@#{attr}]").each { |a_tag|
             a_tag.raw_attributes[attr.to_s] = hack_link(a_tag.attributes[attr.to_s], hack[:proxy])
@@ -94,7 +106,7 @@ class AppBase
         }
       }
     }
-    
+
     doc.to_s.gsub(/<!--.*?-->/, '')
   end
 
@@ -104,7 +116,7 @@ class AppBase
     case url
     when /^javascript/, /^mailto/:
       url
-    # when /\.jpg/, /\.png/:
+      # when /\.jpg/, /\.png/:
       # url
     else
       uri = URI.parse(url.strip.gsub(/ /, '%20'))
@@ -114,7 +126,7 @@ class AppBase
                         if uri.relative?
                           @base_uri.host
                         else
-                          puts "Warning! Proxying non-base url #{uri}" if uri.host != @base_uri.host
+                          #                          puts "Warning! Proxying non-base url #{uri}" if uri.host != @base_uri.host
                           uri.host
                         end + "#{uri.path}"
               else
