@@ -8,3 +8,15 @@ camping src/moHole.rb
 
 # TO TEST
 write tests!
+
+# TO DEPLOY
+- Log in to the machine as a sudoable user, with git repo in ~/mohole.git (glen is good)
+- Run dis:
+sudo killall camping
+cd ~/mohole.git
+git pull origin master
+sudo rsync --exclude=.* -rP --delete . /home/mohole/current/
+sudo chown -R www-data:www-data /home/mohole/current/
+sudo su mohole -c 'nohup camping /home/mohole/current/src/moHole.rb &'
+sudo su mohole -c 'ps fx'
+- you should see an item in there for camping src/moHole.rb
