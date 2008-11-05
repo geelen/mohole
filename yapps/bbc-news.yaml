@@ -1,0 +1,35 @@
+---
+name: bbc-news
+base: http://news.bbc.co.uk/
+rewrites:
+  - remove:
+    - head
+    - script
+    - '#blq-accesslinks'
+    - '#blq-pre-mast-container'
+    - '#blq-acc'
+    - div.ds
+    - div.newsbanner
+    - '#blq-mast/form'
+    - .ticko
+    - td.gffffff
+    - search: table
+      at_indices: [0]
+    - search: table/td
+      at_indices: [0]
+    - search: td/table
+      at_indices: [0]
+    - search: td/table/td/table
+      at_indices: [0, 1]
+    - search: body/div/table/tbody/tr/td/table/tbody/tr/td/table/tbody/tr/td
+      at_indices: [1]
+  - prepend:
+    - at: body
+      insert: >
+        <head>
+          <meta name='viewport' content='width=320'/>
+          <style type="text/css">
+            body { font:normal 100% Arial, Helvetica, sans-serif; margin:0; padding:5px; background-color: #F3F3F3; }
+            img { border: 0px; }
+          </style>
+        </head>
