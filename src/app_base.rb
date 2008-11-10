@@ -78,7 +78,7 @@ class AppBase
     raise "Need a full http://address/, got #{base.inspect}" if !@base_uri.scheme
   end
 
-  def rewrite doc
+  def rewrite doc, uri
     title = doc.at(:title).inner_text
 
     @rewrite.call doc
@@ -100,7 +100,7 @@ class AppBase
       hack[:tags].each { |attr, tags|
         tags.each { |tag|
           (doc/"//#{tag}[@#{attr}]").each { |a_tag|
-            a_tag.raw_attributes[attr.to_s] = hack_link(a_tag.attributes[attr.to_s], hack[:proxy])
+            a_tag.raw_attributes[attr.to_s] = hack_link(uri, a_tag.attributes[attr.to_s], hack[:proxy])
           }
         }
       }
@@ -111,7 +111,7 @@ class AppBase
 
   private
 
-  def hack_link(url, proxy = false)
+  def hack_link(request_uri, url, proxy = false)
     case url
     when /^javascript/, /^mailto/:
       url
@@ -127,10 +127,20 @@ class AppBase
                         else
                           #                          puts "Warning! Proxying non-base url #{uri}" if uri.host != @base_uri.host
                           uri.host
-                        end + "#{uri.path}"
+                        end + "#{uri.path}" +
+                        if uri.query
+                          "?#{uri.query}"
+                        else
+                          ""
+                        end
               else
                 if uri.relative?
-                  "#{@base_uri.scheme}://#{@base_uri.host}"
+                  "#{@base_uri.scheme}://#{@base_uri.host}" +
+                          if uri.path =~ /^\//
+                            ""
+                          else
+                            URI.parse(request_uri).path.match(/(.*\/)[^\/]+/)[1]
+                          end
                 else
                   ""
                 end + "#{uri.to_s}"
