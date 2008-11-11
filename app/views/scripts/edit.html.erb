@@ -1,0 +1,12 @@
+<h1>Editing script</h1>
+
+<% form_for(@script) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit "Update" %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @script %> |
+<%= link_to 'Back', scripts_path %>
