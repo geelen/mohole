@@ -1,0 +1,3 @@
+[submodule "vendor/plugins/hammock"]
+	path = vendor/plugins/hammock
+	url = git://github.com/benhoskings/hammock
