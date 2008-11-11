@@ -1,3 +1,6 @@
 [submodule "vendor/plugins/hammock"]
 	path = vendor/plugins/hammock
 	url = git://github.com/benhoskings/hammock
+[submodule "vendor/plugins/jrails"]
+	path = vendor/plugins/jrails
+	url = git://github.com/benhoskings/jrails.git
