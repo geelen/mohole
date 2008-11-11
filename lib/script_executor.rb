@@ -33,6 +33,8 @@ class ScriptExecutor
   def rewrite(doc, uri, rewrites)
     
   end
-  
-  def 
+
+  def hack_links
+    
+  end
 end
