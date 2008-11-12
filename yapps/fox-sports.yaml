@@ -11,10 +11,6 @@ rewrites:
     - '#footer'
     - div.sponsors
     - dl.story-tools
-#  - inject:
-#    - at:
-#        - '#lead-link/div'
-#      style: "width: 320px; height: 220px;"
   - prepend:
     - at: body
       insert: >
