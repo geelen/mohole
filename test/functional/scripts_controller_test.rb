@@ -1,45 +1,17 @@
-require 'test_helper'
+require File.dirname(__FILE__) + '/../test_helper'
 
 class ScriptsControllerTest < ActionController::TestCase
-  def test_should_get_index
-    get :index
-    assert_response :success
-    assert_not_nil assigns(:scripts)
-  end
-
-  def test_should_get_new
-    get :new
-    assert_response :success
-  end
-
-  def test_should_create_script
-    assert_difference('Script.count') do
-      post :create, :script => { }
+  context "A script" do
+    setup do
+      @script = Script.find :first
+    end
+    
+    should "have a base_uri" do
+      assert_not_nil @script.base_uri
     end
 
-    assert_redirected_to script_path(assigns(:script))
-  end
-
-  def test_should_show_script
-    get :show, :id => scripts(:one).id
-    assert_response :success
-  end
-
-  def test_should_get_edit
-    get :edit, :id => scripts(:one).id
-    assert_response :success
-  end
-
-  def test_should_update_script
-    put :update, :id => scripts(:one).id, :script => { }
-    assert_redirected_to script_path(assigns(:script))
-  end
-
-  def test_should_destroy_script
-    assert_difference('Script.count', -1) do
-      delete :destroy, :id => scripts(:one).id
-    end
-
-    assert_redirected_to scripts_path
+      should "have a creator_id" do
+        assert_not_nil @script.creator_id
+      end
   end
 end

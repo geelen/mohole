@@ -5,3 +5,14 @@
 #
 # two:
 #   column: value
+
+script_1:
+  base_uri: "www.foxsports.com.au"
+  creator_id: 1
+  content: <%= %Q{
+---
+rewrites:
+  - remove:
+      - head
+      - script 
+  } %>
