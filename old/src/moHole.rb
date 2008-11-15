@@ -1,9 +1,3 @@
-# Created by IntelliJ IDEA.
-# User: Glen
-# Date: 23/10/2008
-# Time: 21:21:51
-# To change this template use File | Settings | File Templates.
-
 require 'rubygems'
 require 'camping'
 require 'hpricot'
