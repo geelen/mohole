@@ -10,8 +10,8 @@ class ScriptsControllerTest < ActionController::TestCase
       assert_not_nil @script.base_uri
     end
 
-      should "have a creator_id" do
-        assert_not_nil @script.creator_id
-      end
+    should "have a creator_id" do
+      assert_not_nil @script.creator_id
+    end
   end
 end
