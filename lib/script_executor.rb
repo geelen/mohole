@@ -66,8 +66,6 @@ class ScriptExecutor
     }
   end
 
-  private
-
   def hack_link(request_uri, url, name, base_uri, proxy = false)
     case url
     when /^javascript/, /^mailto/:

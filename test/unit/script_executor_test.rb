@@ -17,28 +17,30 @@ class ScriptExecutorTest < Test::Unit::TestCase
       assert_equal Hpricot(open(uri)).to_s, fetched.to_s
     end
 
-    should "should fetch a url" do
-      uri = 'http://www.google.com'
-      fetched = @script_executor.fetch_uri(uri)
-      assert_equal Hpricot(open(uri)).to_s, fetched.to_s
-    end
+    context "for titles" do
+      should "inject a title when there is no head tag" do
+        doc = Hpricot(%Q{<html><body><p>yo</p></body></html>})
+        @script_executor.inject_title(doc, 'title')
+        assert_equal %Q{<html><head><title>#{ScriptExecutor::TitlePrefix} - title</title></head><body><p>yo</p></body></html>}, doc.to_s
+      end
 
-    should "inject a title when there is no head tag" do
-      doc = Hpricot(%Q{<html><body><p>yo</p></body></html>})
-      @script_executor.inject_title(doc,'title')
-      assert_equal %Q{<html><head><title>#{ScriptExecutor::TitlePrefix} - title</title></head><body><p>yo</p></body></html>}, doc.to_s
-    end
+      should "inject a title when there is a blank head tag" do
+        doc = Hpricot(%Q{<html><head></head><body><p>yo</p></body></html>})
+        @script_executor.inject_title(doc, 'title')
+        assert_equal %Q{<html><head><title>#{ScriptExecutor::TitlePrefix} - title</title></head><body><p>yo</p></body></html>}, doc.to_s
+      end
 
-    should "inject a title when there is a blank head tag" do
-      doc = Hpricot(%Q{<html><head></head><body><p>yo</p></body></html>})
-      @script_executor.inject_title(doc,'title')
-      assert_equal %Q{<html><head><title>#{ScriptExecutor::TitlePrefix} - title</title></head><body><p>yo</p></body></html>}, doc.to_s
-    end
+      should "inject the prefix when there is already a title" do
+        doc = Hpricot(%Q{<html><head><title></title></head><body><p>yo</p></body></html>})
+        @script_executor.inject_title(doc, 'title')
+        assert_equal %Q{<html><head><title>#{ScriptExecutor::TitlePrefix} - title</title></head><body><p>yo</p></body></html>}, doc.to_s
+      end
 
-    should "inject the prefix when there is already a title" do
-      doc = Hpricot(%Q{<html><head><title></title></head><body><p>yo</p></body></html>})
-      @script_executor.inject_title(doc,'title')
-      assert_equal %Q{<html><head><title>#{ScriptExecutor::TitlePrefix} - title</title></head><body><p>yo</p></body></html>}, doc.to_s
+      should "inject the prefix when there is already a title" do
+        doc = Hpricot(%Q{<html><head><title></title></head><body><p>yo</p></body></html>})
+        @script_executor.inject_title(doc, 'title')
+        assert_equal %Q{<html><head><title>#{ScriptExecutor::TitlePrefix} - title</title></head><body><p>yo</p></body></html>}, doc.to_s
+      end
     end
   end
 end
