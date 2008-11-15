@@ -35,16 +35,19 @@ class ScriptExecutorTest < Test::Unit::TestCase
         @script_executor.inject_title(doc, 'title')
         assert_equal %Q{<html><head><title>#{ScriptExecutor::TitlePrefix} - title</title></head><body><p>yo</p></body></html>}, doc.to_s
       end
-
-      should "inject the prefix when there is already a title" do
-        doc = Hpricot(%Q{<html><head><title></title></head><body><p>yo</p></body></html>})
-        @script_executor.inject_title(doc, 'title')
-        assert_equal %Q{<html><head><title>#{ScriptExecutor::TitlePrefix} - title</title></head><body><p>yo</p></body></html>}, doc.to_s
-      end
     end
 
     context "for searching" do
-      should ""
+      setup do
+        @doc = Hpricot(%Q{<html><head><title></title></head><body><p>yo</p><p class="win">bro</p></body></html>})
+      end
+      should "match same same" do
+        matches = []
+        @script_executor.search(@doc, 'p') { |match|
+          matches += match
+        }
+        assert_equal ["<p>yo</p>",'<p class="win">bro</p>'], matches.map { |e| e.to_s }
+      end
     end
   end
 end
