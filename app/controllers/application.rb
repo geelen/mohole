@@ -14,4 +14,9 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
   
   include Hammock
+  
+  before_filter :mock_login
+  def mock_login
+    @current_account = User.find_by_name "ben_h"
+  end
 end
