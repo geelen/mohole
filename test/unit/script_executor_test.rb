@@ -42,5 +42,9 @@ class ScriptExecutorTest < Test::Unit::TestCase
         assert_equal %Q{<html><head><title>#{ScriptExecutor::TitlePrefix} - title</title></head><body><p>yo</p></body></html>}, doc.to_s
       end
     end
+
+    context "for searching" do
+      should ""
+    end
   end
 end
