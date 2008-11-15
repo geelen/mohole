@@ -12,8 +12,9 @@ class ScriptExecutor
   end
 
   def fetch_uri(uri)
-    fetching = "http://#{uri}"
-    log "Fetching #{fetching.inspect}"
+    fetching = uri.start_with "http://"
+    #todo: fix
+    log "Fetching #{fetching.inspect}" rescue nil
     Hpricot(open(fetching))
   end
 
