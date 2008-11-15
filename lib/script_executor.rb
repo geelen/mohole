@@ -6,6 +6,7 @@ class ScriptExecutor
           {:proxy => true, :tags => {:href => [:a], :action => [:form]}},
                   {:proxy => false, :tags => {:href => [:link], :src => [:img, :script, :iframe]}}
   ]
+  TitlePrefix = 'moHole!'
 
   def initialize
 
@@ -32,11 +33,11 @@ class ScriptExecutor
 
   def inject_title(doc, title)
     if (title_tag = doc.at(:title))
-      title_tag.inner_html = "MoHole! - #{title}"
+      title_tag.inner_html = "#{TitlePrefix} - #{title}"
     elsif (head_tag = doc.at(:head))
-      head_tag.inner_html += "<title>MoHole! - #{title}</title>"
-    elsif (body_tags = (doc/:body))
-      body_tags.prepend("<head><title>MoHole! - #{title}</title></head>")
+      head_tag.inner_html += "<title>#{TitlePrefix} - #{title}</title>"
+    elsif (html_tags = (doc/:html))
+      html_tags.prepend("<head><title>#{TitlePrefix} - #{title}</title></head>")
     end
   end
 
