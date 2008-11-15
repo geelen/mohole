@@ -1,9 +1,3 @@
-# Created by IntelliJ IDEA.
-# User: Glen
-# Date: 23/10/2008
-# Time: 23:05:39
-# To change this template use File | Settings | File Templates.
-
 class Left
     def initialize val
         @val = val

@@ -8,10 +8,6 @@ class ScriptExecutor
   ]
   TitlePrefix = 'moHole!'
 
-  def initialize
-
-  end
-
   def fetch_uri(uri)
     fetching = uri.start_with "http://"
     #todo: fix
@@ -21,13 +17,9 @@ class ScriptExecutor
 
   def execute(doc, uri, rewrites, name, base_uri)
     title = doc.at(:title).inner_text
-
     rewrite(doc, uri, rewrites)
-
     inject_title(doc, title)
-
     hack_links(doc, uri, name, base_uri)
-
     doc.to_s.gsub(/<!--.*?-->/, '')
   end
 

@@ -1,8 +1,7 @@
 require 'test_helper'
 
 class ScriptTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  def test_truth
-    assert true
+  context "A script" do
+    should_belong_to :user
   end
 end
