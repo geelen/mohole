@@ -28,5 +28,17 @@ class ScriptExecutorTest < Test::Unit::TestCase
       @script_executor.inject_title(doc,'title')
       assert_equal %Q{<html><head><title>#{ScriptExecutor::TitlePrefix} - title</title></head><body><p>yo</p></body></html>}, doc.to_s
     end
+
+    should "inject a title when there is a blank head tag" do
+      doc = Hpricot(%Q{<html><head></head><body><p>yo</p></body></html>})
+      @script_executor.inject_title(doc,'title')
+      assert_equal %Q{<html><head><title>#{ScriptExecutor::TitlePrefix} - title</title></head><body><p>yo</p></body></html>}, doc.to_s
+    end
+
+    should "inject the prefix when there is already a title" do
+      doc = Hpricot(%Q{<html><head><title></title></head><body><p>yo</p></body></html>})
+      @script_executor.inject_title(doc,'title')
+      assert_equal %Q{<html><head><title>#{ScriptExecutor::TitlePrefix} - title</title></head><body><p>yo</p></body></html>}, doc.to_s
+    end
   end
 end
