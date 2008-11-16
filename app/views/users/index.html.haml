@@ -3,9 +3,9 @@
 %table
   - @users.each do |user|
     %tr
-      %td= user.name
-      %td= hamlink_to user
+      %td
+        %b= hamlink_to user, :text => user.name
       %td= hamlink_to :edit, user
       %td= hamlink_to :destroy, user
 
-= hamlink_to :new, User
+%p= hamlink_to :new, User
