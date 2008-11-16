@@ -39,7 +39,7 @@ class ScriptExecutorTest < Test::Unit::TestCase
 
     context "for searching" do
       setup do
-        @doc = Hpricot(%Q{<html><head><title></title></head><body><p>yo</p><p class="win">bro</p></body></html>})
+        @doc = Hpricot(%Q{<html><head><title></title></head><body><div><p>yo</p></div><p class="win">bro</p></body></html>})
       end
 
       should "match ps" do
@@ -49,9 +49,11 @@ class ScriptExecutorTest < Test::Unit::TestCase
       end
 
       should "match multiple" do
-        @script_executor.search(@doc, 'p') { |match|
-          assert_equal (@doc/'p'), match
+        matches = []
+        @script_executor.search(@doc, ['p','div']) { |match|
+          matches << match
         }
+        assert_equal [(@doc/'p'),(@doc/'div')], matches
       end
     end
   end
