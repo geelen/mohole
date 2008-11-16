@@ -41,6 +41,7 @@ class ScriptExecutor
   end
 
   def rewrite(doc, request_uri, rewrites)
+    puts "lol: #{rewrites.inspect}"
     rewrites.each { |rule|
       (rule['remove'] or []).each { |t| search(doc, t) { |elems| elems.remove } }
       (rule['prepend'] or []).each { |prep| (doc/prep['at']).prepend(prep['insert'].to_s) }
