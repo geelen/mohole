@@ -77,6 +77,12 @@ class ScriptExecutorTest < Test::Unit::TestCase
         test.call("javascript:alert('fail!');")
         test.call("mailto:fail@fail.com;")
       end
+
+      should "pass through non-proxied absolute links with optional spaces" do
+        test = proc { |link| assert_equal link.gsub(/ /,'%20'), @script_executor.hack_link(nil, link, nil, nil, false) }
+        test.call("http://other.site/")
+        test.call("http://other.site/page one/two")
+      end
       
       should "hack" do
         @script_executor.hack_link("http://site/model/view.html", "javascript:alert('fail!');", 'site', 'http://site/', false)
