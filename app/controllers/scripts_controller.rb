@@ -12,7 +12,7 @@ class ScriptsController < ApplicationController
       end.start_with('http://')
 
       log "running Script<#{@script.id}>:#{@script.base_uri} on #{uri}"
-      html = ScriptExecutor.go uri, YAML.load(@script.content), "scripts/#{@script.id}"
+      html = ScriptExecutor.go uri, YAML.load(@script.content), "scripts/#{@script.id}/run"
       render :text => html
     end
   end
