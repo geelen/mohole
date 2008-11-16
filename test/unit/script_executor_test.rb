@@ -1,5 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'uri'
+require 'yaml'
 
 #todo: where to place this?
 def search_helper *args
@@ -14,6 +15,7 @@ class ScriptExecutorTest < Test::Unit::TestCase
   context "A script executor" do
     setup do
       @script_executor = ScriptExecutor.new
+      @doc = Hpricot(%Q{<html><head><title></title></head><body><div><p>yo</p></div><p class="win">bro</p></body></html>})      
     end
 
     should "at least exist" do
@@ -47,10 +49,6 @@ class ScriptExecutorTest < Test::Unit::TestCase
     end
 
     context "for searching" do
-      setup do
-        @doc = Hpricot(%Q{<html><head><title></title></head><body><div><p>yo</p></div><p class="win">bro</p></body></html>})
-      end
-
       should "match ps" do
         assert_equal [(@doc/'p')], search_helper(@doc, 'p')
       end
@@ -73,35 +71,35 @@ class ScriptExecutorTest < Test::Unit::TestCase
 
     context "for link hacking" do
       should "early exit for javascript and mailto" do
-        test = proc { |link| assert_equal link, @script_executor.hack_link(nil, link, nil, nil, nil) }
+        test = proc { |link| assert_equal link, @script_executor.hack_link(nil, link, nil, nil) }
         test.call("javascript:alert('fail!');")
         test.call("mailto:fail@fail.com;")
       end
 
       should "pass through non-proxied absolute links with optional spaces" do
-        test = proc { |link| assert_equal link.gsub(/ /,'%20'), @script_executor.hack_link(nil, link, nil, nil, false) }
+        test = proc { |link| assert_equal link.gsub(/ /,'%20'), @script_executor.hack_link(nil, link, nil, false) }
         test.call("http://other.site/")
         test.call("http://other.site/page one/two")
       end
 
       should "rebase non-proxies relative links" do
-        run = proc { |link| @script_executor.hack_link('http://site/path/index.html', link, nil, nil, false) }
+        run = proc { |link| @script_executor.hack_link('http://site/path/index.html', link, nil, false) }
         assert_equal 'http://site/resource.css', run.call('/resource.css')
         assert_equal 'http://site/path/resource.css', run.call('resource.css')
         assert_equal 'http://site/view?id=5', run.call('/view?id=5')
       end
       
       should "should proxy links too" do
-        run = proc { |link| @script_executor.hack_link('http://site/path/index.html', link, 'site', URI.parse('http://site/'), true) }
+        run = proc { |link| @script_executor.hack_link('http://site/path/index.html', link, 'site', true) }
         assert_equal '/site/http://site/resource.css', run.call('http://site/resource.css')
         assert_equal '/site/http://site/resource.css', run.call('/resource.css')
         assert_equal '/site/http://site/path/resource.css', run.call('resource.css')
         assert_equal '/site/http://site/view?id=5', run.call('/view?id=5')
       end
-      
-      should "hack" do
-        @script_executor.hack_link("http://site/model/view.html", "javascript:alert('fail!');", 'site', 'http://site/', false)
-      end
+    end
+
+    should "execute everything" do
+      @script_executor.execute(@doc, "http://site/path/index.html", [], "scripts/5/run")
     end
   end
 end
