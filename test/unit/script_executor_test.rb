@@ -70,5 +70,17 @@ class ScriptExecutorTest < Test::Unit::TestCase
         assert_equal [(@doc/'p'), (@doc/'div')], search_helper(@doc, ['p', 'div'])
       end
     end
+
+    context "for link hacking" do
+      should "early exit for javascript and mailto" do
+        test = proc { |link| assert_equal link, @script_executor.hack_link(nil, link, nil, nil, nil) }
+        test.call("javascript:alert('fail!');")
+        test.call("mailto:fail@fail.com;")
+      end
+      
+      should "hack" do
+        @script_executor.hack_link("http://site/model/view.html", "javascript:alert('fail!');", 'site', 'http://site/', false)
+      end
+    end
   end
 end
