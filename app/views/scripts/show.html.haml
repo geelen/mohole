@@ -1,6 +1,7 @@
 %p= @script.base_uri
-%pre= @script.content
+%pre= h @script.content
 
 = hamlink_to Script
 = hamlink_to :edit, @script
 = hamlink_to :destroy, @script
+= hamlink_to :run, @script
