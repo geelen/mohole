@@ -4,12 +4,11 @@ class ScriptsController < ApplicationController
 
   def run
     if find_record
-      uri = params[:uri].join('/').start_with('http://')
-
-      log "running Script<#{@script.id}>:#{@script.base_uri} on #{uri}"
-
       # hax
-      ScriptExecutor.go uri, YAML.load(@script.content), "scripts/#{@script.id}"
+      uri = params[:uri].join('/').start_with('http://')
+      log "running Script<#{@script.id}>:#{@script.base_uri} on #{uri}"
+      html = ScriptExecutor.go uri, YAML.load(@script.content), "scripts/#{@script.id}"
+      render :text => html
     end
   end
 
