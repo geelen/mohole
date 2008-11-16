@@ -41,12 +41,17 @@ class ScriptExecutorTest < Test::Unit::TestCase
       setup do
         @doc = Hpricot(%Q{<html><head><title></title></head><body><p>yo</p><p class="win">bro</p></body></html>})
       end
-      should "match same same" do
-        matches = []
+
+      should "match ps" do
         @script_executor.search(@doc, 'p') { |match|
-          matches += match
+          assert_equal (@doc/'p'), match
         }
-        assert_equal ["<p>yo</p>",'<p class="win">bro</p>'], matches.map { |e| e.to_s }
+      end
+
+      should "match multiple" do
+        @script_executor.search(@doc, 'p') { |match|
+          assert_equal (@doc/'p'), match
+        }
       end
     end
   end
