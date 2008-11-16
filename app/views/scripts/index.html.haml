@@ -1,11 +1,18 @@
-%h1== Listing #{@user.name.possessive unless @user.nil?} scripts
+%h1
+  == Listing #{@user.name.possessive unless @user.nil?} scripts
+  - unless @user.nil?
+    == &mdash; #{hamlink_to Script, :text => 'all', :nest => false}
 
 %table
   - @scripts.each do |script|
     %tr
       %td
-        %b= hamlink_to script, :text => script.base_uri
+        %b== #{hamlink_to script, :text => script.base_uri},
+        == from #{link_to script.creator.name, script.creator}
+        &nbsp;
+        %b= hamlink_to :run, script, :text => 'run it', :nest => false
+
       %td= hamlink_to :edit, script
       %td= hamlink_to :destroy, script
 
-%p= hamlink_to :new, Script
+%p= hamlink_to :new, Script, :nest => false
