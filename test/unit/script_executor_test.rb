@@ -88,6 +88,15 @@ class ScriptExecutorTest < Test::Unit::TestCase
         run = proc { |link| @script_executor.hack_link('http://site/path/index.html', link, nil, nil, false) }
         assert_equal 'http://site/resource.css', run.call('/resource.css')
         assert_equal 'http://site/path/resource.css', run.call('resource.css')
+        assert_equal 'http://site/view?id=5', run.call('/view?id=5')
+      end
+      
+      should "should proxy links too" do
+        run = proc { |link| @script_executor.hack_link('http://site/path/index.html', link, 'site', URI.parse('http://site/'), true) }
+        assert_equal '/site/http://site/resource.css', run.call('http://site/resource.css')
+        assert_equal '/site/http://site/resource.css', run.call('/resource.css')
+        assert_equal '/site/http://site/path/resource.css', run.call('resource.css')
+        assert_equal '/site/http://site/view?id=5', run.call('/view?id=5')
       end
       
       should "hack" do

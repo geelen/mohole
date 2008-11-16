@@ -66,36 +66,15 @@ class ScriptExecutor
       # url
     else
       uri = URI.parse(url.strip.gsub(/ /, '%20'))
-      result =
-              if proxy
-                "/#{name}/#{base_uri.scheme}://" +
-                        if uri.relative?
-                          base_uri.host
-                        else
-                          #puts "Warning! Proxying non-base url #{uri}" if uri.host != @base_uri.host
-                          uri.host
-                        end + "#{uri.path}" +
-                        if uri.query
-                          "?#{uri.query}"
-                        else
-                          ""
-                        end
-              else
-                if uri.relative?
-                  req_uri = URI.parse(request_uri)
-                  "#{req_uri.scheme}://#{req_uri.host}" +
-                          if uri.path =~ /^\//
-                            ""
-                          else
-                            req_uri.path.match(/(.*\/)[^\/]+/)[1]
-                          end
-                else
-                  ""
-                end + "#{uri.to_s}"
-              end
+      result = (proxy ? "/#{name}/" : "") + (uri.relative? ? absolutify(request_uri, uri) : "") + uri.to_s
 #      puts "Hacking: #{url.inspect} with proxy: #{proxy} gives: #{result}"
       result
     end
+  end
+
+  def absolutify(current_uri, uri)
+    req_uri = URI.parse(current_uri)
+    "#{req_uri.scheme}://#{req_uri.host}#{uri.path =~ /^\// ? "" : req_uri.path.match(/(.*\/)[^\/]+/)[1]}"
   end
 
   def search(doc, objs)
