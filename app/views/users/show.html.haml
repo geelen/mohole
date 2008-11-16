@@ -1,5 +1,6 @@
-= @user.name
+%p== #{@user.name} - #{@user.email}
 
 = hamlink_to User
 = hamlink_to :edit, @user
 = hamlink_to :destroy, @user
+= hamlink_to @user, Script, :text => 'scripts'
