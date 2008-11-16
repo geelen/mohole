@@ -1,6 +1,15 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'uri'
 
+#todo: where to place this?
+def search_helper *args
+  matches = []
+  @script_executor.search(*args) { |match|
+    matches << match
+  }
+  matches
+end
+
 class ScriptExecutorTest < Test::Unit::TestCase
   context "A script executor" do
     setup do
@@ -39,19 +48,38 @@ class ScriptExecutorTest < Test::Unit::TestCase
 
     context "for searching" do
       setup do
-        @doc = Hpricot(%Q{<html><head><title></title></head><body><p>yo</p><p class="win">bro</p></body></html>})
+        @doc = Hpricot(%Q{<html><head><title></title></head><body><div><p>yo</p></div><p class="win">bro</p></body></html>})
       end
 
       should "match ps" do
-        @script_executor.search(@doc, 'p') { |match|
-          assert_equal (@doc/'p'), match
-        }
+        assert_equal [(@doc/'p')], search_helper(@doc, 'p')
       end
 
-      should "match multiple" do
-        @script_executor.search(@doc, 'p') { |match|
-          assert_equal (@doc/'p'), match
-        }
+      should "interpret slashes" do
+        assert_equal [(@doc/'div'/'p')], search_helper(@doc, 'div/p')
+      end
+
+      should "permit sub selections" do
+        test = proc { |i| assert_equal [(@doc/'p')[i].search('*')], search_helper(@doc, {'search' => 'p', 'at_indices' => i}) }
+        test.call(0)
+        test.call(1)
+        test.call(-1)
+      end
+
+      should "match multiple targets" do
+        assert_equal [(@doc/'p'), (@doc/'div')], search_helper(@doc, ['p', 'div'])
+      end
+    end
+
+    context "for link hacking" do
+      should "early exit for javascript and mailto" do
+        test = proc { |link| assert_equal link, @script_executor.hack_link(nil, link, nil, nil, nil) }
+        test.call("javascript:alert('fail!');")
+        test.call("mailto:fail@fail.com;")
+      end
+      
+      should "hack" do
+        @script_executor.hack_link("http://site/model/view.html", "javascript:alert('fail!');", 'site', 'http://site/', false)
       end
     end
   end
