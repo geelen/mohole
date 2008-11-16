@@ -42,9 +42,9 @@ class ScriptExecutor
 
   def rewrite(doc, request_uri, rewrites)
     rewrites.each { |rule|
-      rule['remove'].each { |t| search(doc, t) { |elems| elems.remove } }
-      rule['prepend'].each { |prep| (doc/prep['at']).prepend(prep['insert'].to_s) }
-      rule['inject'].each { |prep|
+      (rule['remove'] or []).each { |t| search(doc, t) { |elems| elems.remove } }
+      (rule['prepend'] or []).each { |prep| (doc/prep['at']).prepend(prep['insert'].to_s) }
+      (rule['inject'] or []).each { |prep|
         injections = Hash[*prep.map { |k, v| [k.to_s, v.to_s] }.delete_if { |k, _| k == 'at' }.compact.flatten]
         self.search(doc, prep['at']) { |elems|
           elems.set(injections)
