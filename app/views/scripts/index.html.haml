@@ -1,0 +1,11 @@
+%h1 Listing scripts
+
+%table
+  - @scripts.each do |script|
+    %tr
+      %td= script.base_uri
+      %td= hamlink_to script
+      %td= hamlink_to :edit, script
+      %td= hamlink_to :destroy, script
+
+= hamlink_to :new, Script

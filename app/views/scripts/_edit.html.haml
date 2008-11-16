@@ -1,0 +1,11 @@
+.h1
+  = @script.new_record? ? 'new' : 'editing'
+  script
+
+- form_for @script do |f|
+  = f.error_messages
+  = render :partial => 'script', :locals => {:f => f}
+
+  .p= f.submit
+
+= hamlink_to Script
