@@ -1,6 +1,15 @@
 require File.dirname(__FILE__) + '/../test_helper'
 require 'uri'
 
+#todo: where to place this?
+def search_helper *args
+  matches = []
+  @script_executor.search(*args) { |match|
+    matches << match
+  }
+  matches
+end
+
 class ScriptExecutorTest < Test::Unit::TestCase
   context "A script executor" do
     setup do
@@ -43,17 +52,22 @@ class ScriptExecutorTest < Test::Unit::TestCase
       end
 
       should "match ps" do
-        @script_executor.search(@doc, 'p') { |match|
-          assert_equal (@doc/'p'), match
-        }
+        assert_equal [(@doc/'p')], search_helper(@doc, 'p')
       end
 
-      should "match multiple" do
-        matches = []
-        @script_executor.search(@doc, ['p','div']) { |match|
-          matches << match
-        }
-        assert_equal [(@doc/'p'),(@doc/'div')], matches
+      should "interpret slashes" do
+        assert_equal [(@doc/'div'/'p')], search_helper(@doc, 'div/p')
+      end
+
+      should "permit sub selections" do
+        test = proc { |i| assert_equal [(@doc/'p')[i].search('*')], search_helper(@doc, {'search' => 'p', 'at_indices' => i}) }
+        test.call(0)
+        test.call(1)
+        test.call(-1)
+      end
+
+      should "match multiple targets" do
+        assert_equal [(@doc/'p'), (@doc/'div')], search_helper(@doc, ['p', 'div'])
       end
     end
   end
