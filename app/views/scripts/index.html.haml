@@ -1,4 +1,4 @@
-%h1 Listing scripts
+%h1== Listing #{@user.name.possessive unless @user.nil?} scripts
 
 %table
   - @scripts.each do |script|
