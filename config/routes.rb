@@ -4,8 +4,9 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :scripts
-  
-  map.run_script '/scripts/:id/*uri', :controller => 'scripts', :action => 'run'
+
+  map.run_script '/scripts/:id/run/*uri', :controller => 'scripts', :action => 'run'
+  map.run_user_script '/users/:user_id/scripts/:id/run/*uri', :controller => 'scripts', :action => 'run'
 
   map.root :controller => 'scripts', :action => 'index'
 end
