@@ -80,6 +80,7 @@ class ScriptExecutorTest < Test::Unit::TestCase
         test = proc { |link| assert_equal link.gsub(/ /,'%20'), @script_executor.hack_link(nil, link, nil, false) }
         test.call("http://other.site/")
         test.call("http://other.site/page one/two")
+        test.call("http://othersite")
       end
 
       should "rebase non-proxies relative links" do
@@ -87,14 +88,28 @@ class ScriptExecutorTest < Test::Unit::TestCase
         assert_equal 'http://site/resource.css', run.call('/resource.css')
         assert_equal 'http://site/path/resource.css', run.call('resource.css')
         assert_equal 'http://site/view?id=5', run.call('/view?id=5')
+        assert_equal 'http://site/', run.call('/')
+        assert_equal 'http://site/path/', run.call('')
       end
-      
-      should "should proxy links too" do
+
+      should "should proxy links" do
         run = proc { |link| @script_executor.hack_link('http://site/path/index.html', link, 'site', true) }
         assert_equal '/site/http://site/resource.css', run.call('http://site/resource.css')
         assert_equal '/site/http://site/resource.css', run.call('/resource.css')
         assert_equal '/site/http://site/path/resource.css', run.call('resource.css')
         assert_equal '/site/http://site/view?id=5', run.call('/view?id=5')
+        assert_equal '/site/http://site/', run.call('/')
+        assert_equal '/site/http://site/path/', run.call('')
+        assert_equal '/site/http://site/path/a', run.call('a')
+        assert_equal '/site/http://othersite', run.call('http://othersite')
+      end
+
+      should "handle root request_uris" do
+        assert_equal '/site/http://site/index.html', @script_executor.hack_link('http://site/', '/index.html', 'site', true)
+        assert_equal '/site/http://site/index.html', @script_executor.hack_link('http://site', '/index.html', 'site', true)
+        assert_equal 'http://site/index.html', @script_executor.hack_link('http://site/', '/index.html', 'site', false)
+        assert_equal 'http://site/index.html', @script_executor.hack_link('http://site', 'index.html', 'site', false)
+        assert_equal 'http://site/index.html', @script_executor.hack_link('http://site', '/index.html', 'site', false)
       end
     end
 

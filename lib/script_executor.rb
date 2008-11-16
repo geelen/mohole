@@ -79,9 +79,15 @@ class ScriptExecutor
     end
   end
 
-  def absolutify(current_uri, uri)
-    req_uri = URI.parse(current_uri)
-    "#{req_uri.scheme}://#{req_uri.host}#{uri.path =~ /^\// ? "" : req_uri.path.match(/(.*\/)[^\/]+/)[1]}"
+  def absolutify(request_uri, uri)
+    req_uri = URI.parse(request_uri)
+    "#{req_uri.scheme}://#{req_uri.host}#{uri.path =~ /^\// ? "" :
+            case req_uri.path
+            when /(.*\/)[^\/]+/:
+              $1
+            else
+              "/"
+            end}"
   end
 
   def search(doc, objs)

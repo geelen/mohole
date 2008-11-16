@@ -22,7 +22,6 @@ ActiveRecord::Schema.define(:version => 20081116050045) do
 
   create_table "users", :force => true do |t|
     t.string   "name"
-    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email",      :limit => 128

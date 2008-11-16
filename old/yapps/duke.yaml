@@ -1,0 +1,14 @@
+---
+name: duke
+base: http://duke.railscamp.net
+rewrites:
+  - prepend:
+    - at: html
+      insert: >
+        <head>
+          <meta name='viewport' content='width=960'/>
+          <style type="text/css">
+            #content, #footer { width: 300px; }
+            #sidebar { width: 120px; }
+          </style>
+        </head>
