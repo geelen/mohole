@@ -83,6 +83,12 @@ class ScriptExecutorTest < Test::Unit::TestCase
         test.call("http://other.site/")
         test.call("http://other.site/page one/two")
       end
+
+      should "rebase non-proxies relative links" do
+        run = proc { |link| @script_executor.hack_link('http://site/path/index.html', link, nil, nil, false) }
+        assert_equal 'http://site/resource.css', run.call('/resource.css')
+        assert_equal 'http://site/path/resource.css', run.call('resource.css')
+      end
       
       should "hack" do
         @script_executor.hack_link("http://site/model/view.html", "javascript:alert('fail!');", 'site', 'http://site/', false)

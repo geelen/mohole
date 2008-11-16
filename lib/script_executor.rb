@@ -82,11 +82,12 @@ class ScriptExecutor
                         end
               else
                 if uri.relative?
-                  "#{base_uri.scheme}://#{base_uri.host}" +
+                  req_uri = URI.parse(request_uri)
+                  "#{req_uri.scheme}://#{req_uri.host}" +
                           if uri.path =~ /^\//
                             ""
                           else
-                            URI.parse(request_uri).path.match(/(.*\/)[^\/]+/)[1]
+                            req_uri.path.match(/(.*\/)[^\/]+/)[1]
                           end
                 else
                   ""
