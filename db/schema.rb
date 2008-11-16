@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081111133746) do
+ActiveRecord::Schema.define(:version => 20081116050045) do
 
   create_table "scripts", :force => true do |t|
     t.string   "base_uri"
@@ -22,8 +22,10 @@ ActiveRecord::Schema.define(:version => 20081111133746) do
 
   create_table "users", :force => true do |t|
     t.string   "name"
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "email",      :limit => 128
   end
 
 end
