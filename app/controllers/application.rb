@@ -17,6 +17,6 @@ class ApplicationController < ActionController::Base
   
   before_filter :mock_login
   def mock_login
-    @current_account = User.find_by_name "ben_h"
+    @current_account = User.find_by_name ENV["USER"]
   end
 end
