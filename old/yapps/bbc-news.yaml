@@ -8,6 +8,6 @@ rewrites:
         <head>
           <meta name='viewport' content='width=320'/>
           <style type="text/css">
-            body { margin:0; padding:5px; }1
+            body { margin:0; padding:5px; }
           </style>
         </head>
