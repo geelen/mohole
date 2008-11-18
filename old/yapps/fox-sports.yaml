@@ -1,0 +1,23 @@
+---
+name: fox-sports
+base: http://www.foxsports.com.au/
+rewrites:
+  - remove:
+    - '#ninn'
+    - '#branding'
+    - '#nav-wrap'
+    - .right-col
+    - '#side-panel'
+    - '#footer'
+    - div.sponsors
+    - dl.story-tools
+  - prepend:
+    - at: body
+      insert: >
+        <head>
+          <meta name='viewport' content='width=380'/>
+          <style type="text/css">
+            #content-home, #content { width: 350px; padding-left: 0px; }
+            #master-wrap { width: 350px; }
+          </style>
+        </head>

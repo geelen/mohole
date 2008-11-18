@@ -1,1 +1,7 @@
-Some crap about Rails...
+DEPLOYMENT:
+
+Me, glen, as rails nub, is trying to deploy to mohole.net!
+
+- sudo gem install -v=2.1.2 rails
+- sudo apt-get install postgresql-8.3 postgresql-server-dev-8.3
+- sudo gem install ruby-pg haml

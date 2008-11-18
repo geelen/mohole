@@ -15,8 +15,8 @@ write tests!
 sudo killall camping
 cd ~/mohole.git
 git pull origin master
-sudo rsync --exclude=.* -rP --delete . /home/mohole/current/
-sudo chown -R www-data:www-data /home/mohole/current/
-sudo su mohole -c 'nohup camping /home/mohole/current/src/moHole.rb &'
-sudo su mohole -c 'ps fx'
+sudo rsync --exclude=.* -rP --delete . /home/mohole-obsolete/current/
+sudo chown -R www-data:www-data /home/mohole-obsolete/current/
+sudo su mohole-obsolete -c 'nohup camping /home/mohole-obsolete/current/src/moHole.rb &'
+sudo su mohole-obsolete -c 'ps fx'
 - you should see an item in there for camping src/moHole.rb

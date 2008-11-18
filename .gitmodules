@@ -1,8 +1,8 @@
 [submodule "vendor/plugins/hammock"]
 	path = vendor/plugins/hammock
-	url = git://zaphod.local/hammock
-	#url = git://github.com/benhoskings/hammock
+	#url = git://zaphod.local/hammock
+	url = git://github.com/benhoskings/hammock
 [submodule "vendor/plugins/jrails"]
 	path = vendor/plugins/jrails
-	url = git://zaphod.local/jrails
-	#url = git://github.com/benhoskings/jrails.git
+	#url = git://zaphod.local/jrails
+	url = git://github.com/benhoskings/jrails.git
