@@ -121,6 +121,7 @@ class ScriptExecutorTest < Test::Unit::TestCase
       @script_executor.execute(@doc, "http://site/path/index.html",
               [{'remove' => ['meta[@http-equiv="refresh"]']}], "scripts/5/run")
       assert_equal 1, (@doc/'meta').length
+      assert !(@doc =~ /refresh/)
     end
   end
 end
