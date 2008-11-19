@@ -119,9 +119,16 @@ class ScriptExecutorTest < Test::Unit::TestCase
 
     should "execute everything" do
       @script_executor.execute(@doc, "http://site/path/index.html",
-              [{'remove' => ['meta[@http-equiv="refresh"]']}], "scripts/5/run")
+              [{'remove' => ['meta[@http-equiv="refresh"]', '.win']},
+                    {'prepend' => [{'at' => 'body', 'insert' => '<h1>my_header</h1>'}]},
+                      {'inject' => [{'at' => 'div', 'class' => 'my_div_class'}]}], "my_script/run")
       assert_equal 1, (@doc/'meta').length
-      assert !(@doc =~ /refresh/)
+      assert !(@doc.to_s =~ /refresh/)
+      assert_equal 1, (@doc/'p').length
+      assert !(@doc.to_s =~ /win/)
+      assert_equal 1, (@doc/'h1').length
+      assert @doc.to_s =~ /<body><h1>my_header<\/h1>/
+      assert @doc.to_s =~ /<div class="my_div_class">/
     end
   end
 end
