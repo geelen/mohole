@@ -1,0 +1,200 @@
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = off;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET escape_string_warning = off;
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: glen; Tablespace: 
+--
+
+CREATE TABLE schema_migrations (
+    version character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public.schema_migrations OWNER TO glen;
+
+--
+-- Name: scripts; Type: TABLE; Schema: public; Owner: glen; Tablespace: 
+--
+
+CREATE TABLE scripts (
+    id integer NOT NULL,
+    base_uri character varying(255),
+    content text,
+    creator_id integer,
+    deleted_at timestamp without time zone,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+ALTER TABLE public.scripts OWNER TO glen;
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: glen; Tablespace: 
+--
+
+CREATE TABLE users (
+    id integer NOT NULL,
+    name character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    email character varying(128)
+);
+
+
+ALTER TABLE public.users OWNER TO glen;
+
+--
+-- Name: scripts_id_seq; Type: SEQUENCE; Schema: public; Owner: glen
+--
+
+CREATE SEQUENCE scripts_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.scripts_id_seq OWNER TO glen;
+
+--
+-- Name: scripts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: glen
+--
+
+ALTER SEQUENCE scripts_id_seq OWNED BY scripts.id;
+
+
+--
+-- Name: scripts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: glen
+--
+
+SELECT pg_catalog.setval('scripts_id_seq', 8, true);
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: glen
+--
+
+CREATE SEQUENCE users_id_seq
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_id_seq OWNER TO glen;
+
+--
+-- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: glen
+--
+
+ALTER SEQUENCE users_id_seq OWNED BY users.id;
+
+
+--
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: glen
+--
+
+SELECT pg_catalog.setval('users_id_seq', 1, true);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: glen
+--
+
+ALTER TABLE scripts ALTER COLUMN id SET DEFAULT nextval('scripts_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: glen
+--
+
+ALTER TABLE users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: glen
+--
+
+COPY schema_migrations (version) FROM stdin;
+20081111123442
+20081111133746
+20081116050045
+\.
+
+
+--
+-- Data for Name: scripts; Type: TABLE DATA; Schema: public; Owner: glen
+--
+
+COPY scripts (id, base_uri, content, creator_id, deleted_at, created_at, updated_at) FROM stdin;
+1	win	is win	1	\N	2008-11-16 03:25:49.59417	2008-11-16 03:25:49.59417
+2	hey	this is sweet	1	\N	2008-11-16 03:27:17.298801	2008-11-16 03:27:17.298801
+3	duke	---\r\n- remove:\r\n  - head	1	\N	2008-11-16 06:09:38.860289	2008-11-16 06:09:38.860289
+4	http://news.bbc.co.uk/mobile/i/bbc_news/index.shtml	---\r\n[]	1	\N	2008-11-18 03:18:51.840677	2008-11-18 03:19:06.552519
+6	http://news.bbc.co.uk/text_only.stm	- prepend:\r\n  - at: body\r\n    insert: >\r\n      <head>\r\n        <meta name='viewport' content='width=320'/>\r\n      </head>	1	\N	2008-11-18 04:58:54.083981	2008-11-18 04:58:54.083981
+5	www.foxsports.com.au	- remove:\r\n  - '#ninn'\r\n  - '#branding'\r\n  - '#nav-wrap'\r\n  - .right-col\r\n  - '#side-panel'\r\n  - '#footer'\r\n  - div.sponsors\r\n  - dl.story-tools\r\n  - 'meta[@http-equiv="refresh"]'\r\n- prepend:\r\n  - at: body\r\n    insert: >\r\n      <head>\r\n        <meta name='viewport' content='width=380'/>\r\n        <style type="text/css">\r\n          #content-home, #content { width: 350px; padding-left: 0px; }\r\n          #master-wrap { width: 350px; }\r\n        </style>\r\n      </head>	1	\N	2008-11-18 03:55:42.504512	2008-11-18 06:07:02.90569
+7	www.smh.com.au	- remove:\r\n  - '#networkStripTop'\r\n  - '#masthead'\r\n  - '#nav'\r\n  - 'meta[@http-equiv="refresh"]'\r\n  - iframe\r\n  - .breadcrumb\r\n  - .leadpic\r\n  - .features\r\n  - search: 'div.nstrap/a'\r\n    at_indices: [0]\r\n  - .c5\r\n  - '#footer'\r\n  - '#sidebar'\r\n  - .c3\r\n  - .skipLinkMobile\r\n  - .inlineRight\r\n  - '#adSpot-textbox1'\r\n- prepend:\r\n  - at: body\r\n    insert: >\r\n      <head>\r\n        <meta name='viewport' content='width=428'/>\r\n        <style type="text/css">\r\n          .nstrap { width: 320px; }\r\n          #content { width: 428px; }\r\n          .sstrap, .writeoffs, .wof { width: 320px; }\r\n        </style>\r\n      </head>	1	\N	2008-11-18 06:53:27.567372	2008-11-18 07:21:44.013587
+8	http://languagelog.ldc.upenn.edu/nll/	- remove:\r\n  - .pusher\r\n  - .navigation\r\n  - '#sidebar'\r\n  - '#ZoomSpin'\r\n  - '#ZoomBox'\r\n  - '#ZoomCapDiv'\r\n  - script\r\n  - object\r\n- prepend:\r\n  - at: body\r\n    insert: >\r\n      <head>\r\n        <meta name='viewport' content='width=320'/>\r\n        <style type="text/css">\r\n          #wrapper { width: 320px; background: white; }\r\n          html>body #content { width: 315px; padding: 0px; }\r\n        </style>\r\n        <script type="text/javascript">\r\n          //alert('ok!');\r\n        </script>\r\n        <script type="text/javascript">\r\n          function downsizeImages() {\r\n            var z = document.getElementsByTagName('img');\r\n            for(i=0;i<z.length;i++) {\r\n              if(z[i].width >= 310){\r\n                z[i].width = 310;\r\n              }\r\n            }\r\n          }\r\n        </script>\r\n      </head>\r\n- inject:\r\n  - at: img\r\n    onload: 'javascript:downsizeImages();'	1	\N	2008-11-20 09:12:39.00367	2008-11-20 09:59:38.944501
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: glen
+--
+
+COPY users (id, name, created_at, updated_at, email) FROM stdin;
+1	glen	2008-11-16 03:18:20.32067	2008-11-16 03:18:20.32067	\N
+\.
+
+
+--
+-- Name: scripts_pkey; Type: CONSTRAINT; Schema: public; Owner: glen; Tablespace: 
+--
+
+ALTER TABLE ONLY scripts
+    ADD CONSTRAINT scripts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: glen; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: glen; Tablespace: 
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
