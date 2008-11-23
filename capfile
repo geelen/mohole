@@ -1,0 +1,17 @@
+$command_line_options = {}
+regexp = /^with_(.+)/
+ENV.keys.grep(regexp).each do |param|
+  override_option = param.match(regexp)[1]
+  $command_line_options[override_option.to_sym] = ENV[param]
+end
+
+ssh_options[:keys] = ["github_id_dsa"].map { |keyname| File.join(ENV["HOME"], ".ssh", keyname) }
+server_path = $command_line_options[:server] || 'mohole.net'
+role :server_role, server_path
+
+namespace :deploy do
+  desc "Deploy to #{server_path}"
+  task :all, :roles => :server_role do
+    run "ls -al"
+  end
+end
