@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   layout 'application'
   protect_from_forgery
 
-  before_filter :mock_login
-  def mock_login
-    @current_account = User.find_by_name ENV["USER"]
+  before_filter :login_from_session
+  def login_from_session
+    @current_account = User.find_by_id(session[:user_id])
   end
 end

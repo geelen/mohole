@@ -4,6 +4,8 @@ ActionController::Routing::Routes.draw do |map|
   end
 
   map.resources :scripts
+  map.resources :sessions
+  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
 
   map.run_script '/scripts/:id/run/*uri', :controller => 'scripts', :action => 'run'
   map.run_user_script '/users/:user_id/scripts/:id/run/*uri', :controller => 'scripts', :action => 'run'

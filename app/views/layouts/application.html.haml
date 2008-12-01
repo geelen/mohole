@@ -12,9 +12,9 @@
       #header
         .status
           - if @current_account.nil?
-            not logged in
+            = link_to 'login', new_session_path
           - else
-            == logged in as #{link_to @current_account.name, @current_account}
+            == logged in as #{hamlink_to @current_account, :text => @current_account.name} &mdash; #{link_to 'logout', logout_path}
       #main
         #flash.in
           - unless flash[:error].nil?
