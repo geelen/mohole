@@ -13,7 +13,16 @@ class ScriptValidatorTest < Test::Unit::TestCase
     end
 
     should "not validate an empty yaml" do
-      assert !@script_validator.validate("---")
+      either = @script_validator.validate("---")
+      assert either.isRight
+      assert_equal ["missing 'rewrites' base element!"], either.right
+    end
+
+    should "validate a yaml" do
+      either = @script_validator.validate("---\nrewrites: []")
+      assert either.isLeft
+      expectedResult = {'rewrites' => []}
+      assert_equal expectedResult, either.left
     end
   end
 end
